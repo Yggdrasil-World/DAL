@@ -4,7 +4,6 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
-import de.yggdrasil.core.Main;
 import de.yggdrasil.core.dal.data.DALWriteScope;
 import de.yggdrasil.core.dal.data.EventDataSource;
 import de.yggdrasil.core.dal.data.HideFromDefaultCollector;
