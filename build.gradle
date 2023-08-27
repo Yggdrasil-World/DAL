@@ -3,7 +3,7 @@ plugins {
     id("io.freefair.lombok") version "8.1.0"
 }
 
-group 'de.yggdrasil.core'
+group 'de.yggdrasil.core.dal'
 version '1.0-SNAPSHOT'
 
 repositories {
