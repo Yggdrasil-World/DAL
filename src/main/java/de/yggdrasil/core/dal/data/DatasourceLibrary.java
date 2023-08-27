@@ -1,5 +1,5 @@
 package de.yggdrasil.core.dal.data;
-import de.yggdrasil.core.strings.logging.DatasourceLibraryLogger;
+import de.yggdrasil.core.dal.strings.logging.DatasourceLibraryLogger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

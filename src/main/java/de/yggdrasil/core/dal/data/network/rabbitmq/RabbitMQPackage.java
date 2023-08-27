@@ -1,7 +1,7 @@
 package de.yggdrasil.core.dal.data.network.rabbitmq;
 
 import de.yggdrasil.core.dal.data.network.Package;
-import de.yggdrasil.core.utils.ByteUtils;
+import de.yggdrasil.core.dal.utils.ByteUtils;
 
 import java.nio.ByteBuffer;
 

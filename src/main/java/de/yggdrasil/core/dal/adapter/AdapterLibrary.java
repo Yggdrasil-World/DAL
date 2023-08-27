@@ -1,7 +1,7 @@
 package de.yggdrasil.core.dal.adapter;
 
-import de.yggdrasil.core.exceptions.dal.DuplicateAdapterForClassException;
-import de.yggdrasil.core.strings.logging.AdapterLibraryLogger;
+import de.yggdrasil.core.dal.exceptions.DuplicateAdapterForClassException;
+import de.yggdrasil.core.dal.strings.logging.AdapterLibraryLogger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

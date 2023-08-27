@@ -1,4 +1,4 @@
-package de.yggdrasil.core.strings;
+package de.yggdrasil.core.dal.strings;
 
 public interface DatabaseStrings {
 

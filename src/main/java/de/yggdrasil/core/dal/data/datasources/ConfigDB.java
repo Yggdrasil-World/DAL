@@ -2,7 +2,7 @@ package de.yggdrasil.core.dal.data.datasources;
 
 import de.yggdrasil.core.dal.data.DALWriteScope;
 import de.yggdrasil.core.dal.data.DataSource;
-import de.yggdrasil.core.strings.DatabaseStrings;
+import de.yggdrasil.core.dal.strings.DatabaseStrings;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.*;

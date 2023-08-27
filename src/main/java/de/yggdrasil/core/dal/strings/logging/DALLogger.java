@@ -1,4 +1,4 @@
-package de.yggdrasil.core.strings.logging;
+package de.yggdrasil.core.dal.strings.logging;
 
 public interface DALLogger {
 

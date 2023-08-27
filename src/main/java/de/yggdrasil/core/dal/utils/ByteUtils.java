@@ -1,4 +1,4 @@
-package de.yggdrasil.core.utils;
+package de.yggdrasil.core.dal.utils;
 
 public class ByteUtils {
 
