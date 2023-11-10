@@ -25,7 +25,29 @@ class MyAdapterClass implements Adapter<T> {
 ### Pipelines
 
 ### Datasources
+Datasources können sowohl persistente (z.B. MySQL-Datenbank) als auch In-Memory Speicher (z.B. RabbitMQ) sein.
+```java
+class MyDataSourceClass implements DataSource {
+
+    DALWriteScope[] getSupportedWriteScopes(){
+        // Unterstütze Scopes sind: RUNTIME, RUNTIME_SYNCHRONISED, PERSISTENT, PERSISTENT_SYNCHRONISED
+    }
+
+    byte[] getBytes(String identifier){
+
+    }
+
+    void writeBytes(String key, byte[] value){
+    
+    }
+
+}
+```
 
 ### ORM (Evelon)
 
 [Offizielle Dokumentation](https://github.com/ByteMCNetzwerk/evelon/wiki)
+
+### Requests
+
+### Responses
