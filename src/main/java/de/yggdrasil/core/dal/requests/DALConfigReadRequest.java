@@ -2,7 +2,7 @@ package de.yggdrasil.core.dal.requests;
 
 import de.yggdrasil.core.dal.data.datasources.ConfigDB;
 
-public class DALConfigReadRequest<String> implements DALReadRequest<ConfigDB>{
+public class DALConfigReadRequest implements DALReadRequest<ConfigDB>{
 
     private final String configKey;
 
