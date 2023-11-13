@@ -322,7 +322,7 @@ public class DALConfigResponse implements DALResponse<String> {
 }
 ```
 
-### Useage
+### Usage
 ```java
 DAL.get().save(new DALConfigWriteRequest("Key", "Value"));
 ```
@@ -330,5 +330,6 @@ DAL.get().save(new DALConfigWriteRequest("Key", "Value"));
 String value = (String) DAL.get().read(new DALConfigReadRequest("Key")).getData();
 ```
 ### ORM (Evelon)
+Die ist eine Library, welche aus Klassen Datenbanktabellen (3. Normalform) generiert. Dies bietet sich besonders für Datasources an.
 
 [Offizielle Dokumentation](https://github.com/ByteMCNetzwerk/evelon/wiki)
