@@ -20,11 +20,6 @@ public class DALConfigWriteRequest implements DALWriteRequest<ConfigDB,String>{
     }
 
     @Override
-    public ConfigDB getDataSource() {
-        return (ConfigDB) DatasourceLibrary.get().getDatasource(ConfigDB.class);
-    }
-
-    @Override
     public String getKey() {
         return this.key;
     }
