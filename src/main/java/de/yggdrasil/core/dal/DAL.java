@@ -1,8 +1,12 @@
 package de.yggdrasil.core.dal;
 
 import de.yggdrasil.core.dal.pipeline.DALPipelineProzessor;
+import de.yggdrasil.core.dal.pipeline.DefaultConfigPipeline;
+import de.yggdrasil.core.dal.requests.DALConfigReadRequest;
+import de.yggdrasil.core.dal.requests.DALConfigWriteRequest;
 import de.yggdrasil.core.dal.requests.DALReadRequest;
 import de.yggdrasil.core.dal.requests.DALWriteRequest;
+import de.yggdrasil.core.dal.responses.DALConfigResponse;
 import de.yggdrasil.core.dal.responses.DALResponse;
 import de.yggdrasil.core.dal.exceptions.MissingPipelineException;
 import de.yggdrasil.core.dal.strings.logging.DALLogger;
@@ -26,7 +30,7 @@ public class DAL {
         }
     }
 
-    public DALResponse read(DALReadRequest readRequest) {
+    public <T extends DALReadRequest, V extends DALResponse> V read(T readRequest) {
         try {
             logger.info(DALLogger.DAL_READ.formatted(readRequest.getClass().getName()));
             return this.pipelineProzessor.readData(readRequest);

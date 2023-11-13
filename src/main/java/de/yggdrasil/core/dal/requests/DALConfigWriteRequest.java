@@ -15,11 +15,6 @@ public class DALConfigWriteRequest implements DALWriteRequest<ConfigDB,String>{
     }
 
     @Override
-    public DALRequestType getRequestType() {
-        return DALRequestType.CONFIG;
-    }
-
-    @Override
     public DALWriteScope getScope() {
         return DALWriteScope.PERSISTENT;
     }

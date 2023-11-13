@@ -6,12 +6,4 @@ import de.yggdrasil.core.dal.requests.DALRequest;
 import de.yggdrasil.core.dal.requests.DALWriteRequest;
 
 @DALPipeline
-public interface Pipeline {
-
-    Class<DALRequest>[] applyForRequestTypes();
-
-    void writeBytes(DALWriteRequest writeRequest);
-
-    DALResponse readBytes(DALReadRequest readRequest);
-
-}
+public interface Pipeline { }
