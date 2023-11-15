@@ -36,7 +36,7 @@ public class AdapterLibrary {
     private void addAdapter(Class<? extends Adapter> adapterClass){
         try {
             Adapter adapterInstance = adapterClass.newInstance();
-            Class adapterType = adapterInstance.getClassOfAdapter();
+            Class adapterType = adapterInstance.getAdapterType();
             if (this.adapters.containsKey(adapterType)) throw new DuplicateAdapterForClassException();
             this.adapters.put(adapterType, adapterInstance);
         } catch (InstantiationException | IllegalAccessException | DuplicateAdapterForClassException e) {
