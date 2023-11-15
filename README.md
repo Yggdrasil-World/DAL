@@ -2,6 +2,8 @@
 
 ## Verwendung
 
+```**Alle Klassen sind darauf ausgelegt, dass alle Generic Types definiert werden, ansonsten kann die funktionalität nicht garantiert werden!**```
+
 ### Adapter
 Adapter werden verwendet um Objecte in Bytes umzuwandeln bzw. von Bytes wieder in ein Object. Damit ein Adapter automatisch gefunden werden kann, muss die Klasse einen no-Args Constructor haben.
 
@@ -17,30 +19,24 @@ class MyAdapterClass implements Adapter<T> {
         //  Diese Methode baut aus den Bytes wieder das jeweilige Object
     }
 
-    Class<T> getClassOfAdapter(){
-        // Hier wird einfach nur die Klasse vom Typ von dem T ist, zurückgegeben.
-    }
 }
 ```
 ### Pipelines
-Pipelines benutzen in der Regel Adapter um Requests zu verarbeiten und ggf. Responses zu senden.
+Pipelines benutzen Adapter,wenn die Daten für die Datasource in Bytes konvertert werden müssen ggf. um Daten für ein Responses aus den Bytes wiederzugewinnen. Unterschieden wird hier zwischen einer Read- und einer Writepipeline. Eine Pipeline kann zwar beide Interfaces implementieren, muss es aber nicht.
 
 ```java
-class MyPipelineClass implements Pipeline {
+// Bei der Readpipeline wird durch die Generics T und V angegeben, welcher Request gehandelt wird und welcher Response dabei zurückkommt.
+// Bei der Writepipeline wird durch D definiert, welchen Writerequests die Pipeline bearbeiten kann
+class MyPipelineClass implements ReadPipeline<T extends DALReadRequest,V extends DALResponse>, WritePipeline<D extends DALWriteRequest> {
 
-    Class<DALRequest>[] applyForRequestTypes(){
-        // Dies gibt ein Array an Classes vom Supertyp "DALRequest" zurück.
-        // Diese werden verwendet um solche Anfragen an die Pipeline weiterzuleiten.
-        // Jeder Requesttype kann nur einmal registriert werden.
-        // Es stehen sowol Read-, als auch Writerequests drin.
-    }
-
-    void writeBytes(DALWriteRequest writeRequest){
+    void writeData(D writeRequest){
         // Hier werden die Daten eines Requests gehandhabt.
         // Üblich wäre es, hier eine Datasource zu verwenden.
+        // Diese kann von der Datasourcelibrary geholt werden,
+        // dafür kann die get getDatasourceClass() Methode des Requests verwendet werden.
     }
 
-    DALResponse readBytes(DALReadRequest readRequest){
+    V readData(T readRequest){
         // Hiermit wird das lesen von Daten umgesetzt.
         // Auch hier würde man von einer Datasource lesen.
     }
@@ -57,14 +53,6 @@ Um Daten speichern zu lassen, wird ein DALWriteRequest genutzt.
 // als Type <V> wird angegeben, für welche Klasse dieser Request genutzt wird
 class MyWriteRequestClass implements DALWriteRequest<T extends DataSource,V>{
 
-    DALWriteScope getScope(){
-        // Hier wird angegebn, welcher Writescope geforder wird (siehe unten bei Datasources)
-    }
-
-    T getDataSource(){
-        // Hier wird angegeben, welche Datasource verwendet werden soll.
-    }
-
     String getKey(){
         // Der Key, der zum Speichern der Daten verwendet werden soll
     }
@@ -79,25 +67,18 @@ class MyWriteRequestClass implements DALWriteRequest<T extends DataSource,V>{
 #### DALReadRequest
 Wenn Daten gelesen werden sollen, wird ein DalReadRequest genutzt. Bei einem solchen bekommt man immer ein Objekt vom Typ DALResponse zurück.
 ```
-class MyReadRequestClass implements DALReadRequest {
-
-    Class<? extends DataSource> getDatasource(){
-        // Die Datasource, von der gelesen werden soll
-    }
+// als Type <T> wird angegeben, von welchem Typ die Datasource ist
+class MyReadRequestClass implements DALReadRequest<T extends DataSource> {
 
     String getIdentifier(){
         // Der Identifier der gesuchten Daten
-    }
-
-    Class getTargetType(){
-        // Der Datentyp der Zieldaten
     }
 
 }
 ```
 ### DALResponse
 ```
-// als Type <V> wird angegeben, was für ein Typ der Wert des Responses ist
+// als Type <T> wird angegeben, was für ein Typ der Wert des Responses ist
 class MyResponseClass implements DALResponse<T> {
 
     T getData(){
@@ -112,15 +93,11 @@ Wie auch die Adapter werden Datasources automatisch gefunden, solange sie public
 ```java
 class MyDataSourceClass implements DataSource {
 
-    DALWriteScope[] getSupportedWriteScopes(){
-        // Unterstütze Scopes sind: RUNTIME, RUNTIME_SYNCHRONISED, PERSISTENT, PERSISTENT_SYNCHRONISED
-    }
-
-    byte[] getBytes(String identifier){
+    T getData(String identifier){
         // die Datasource soll einen mit dem identifier verbundenen Wert zurückgeben
     }
 
-    void writeBytes(String key, byte[] value){
+    void writeData(String key, T value){
         // die gegebenen bytes sollen unter dem angegebenen Identifier gespeichert werden
     }
 
@@ -130,50 +107,30 @@ class MyDataSourceClass implements DataSource {
 ## Beispiel anhand eines Config-Systems
 ### ReadRequest
 ```java
-public class DALConfigReadRequest implements DALReadRequest{
+public class ConfigReadRequest implements DALReadRequest<ConfigDB> {
 
     private final String configKey;
 
-    public DALConfigReadRequest(String configKey){
+    public ConfigReadRequest(String configKey){
         this.configKey = configKey;
-    }
-
-    @Override
-    public Class<? extends DataSource> getDatasource() {
-        return ConfigDB.class;
     }
 
     @Override
     public String getIdentifier() {
         return this.configKey;
     }
-
-    @Override
-    public Class getTargetType() {
-        return String.class;
-    }
 }
 ```
 ### WriteRequest
 ```java
-public class DALConfigWriteRequest implements DALWriteRequest<ConfigDB,String>{
+public class ConfigWriteRequest implements DALWriteRequest<ConfigDB,String> {
 
     private final String key;
     private final String value;
 
-    public DALConfigWriteRequest(String key, String value) {
+    public ConfigWriteRequest(String key, String value) {
         this.key = key;
         this.value = value;
-    }
-
-    @Override
-    public DALWriteScope getScope() {
-        return DALWriteScope.PERSISTENT;
-    }
-
-    @Override
-    public ConfigDB getDataSource() {
-        return (ConfigDB) DatasourceLibrary.get().getDatasource(ConfigDB.class);
     }
 
     @Override
@@ -190,146 +147,88 @@ public class DALConfigWriteRequest implements DALWriteRequest<ConfigDB,String>{
 
 ### Pipeline
 ```java
-public class DefaultConfigPipeline implements Pipeline {
+public class DefaultConfigPipeline implements
+        ReadPipeline<ConfigReadRequest, ConfigResponse>, WritePipeline<ConfigWriteRequest> {
 
     @Override
-    public Class<DALRequest>[] applyForRequestTypes() {
-        return new Class[]{DALConfigReadRequest.class,DALConfigWriteRequest.class};
+    public ConfigResponse readBytes(ConfigReadRequest readRequest) {
+        return new ConfigResponse(DatasourceLibrary.get()
+                .getDatasource(readRequest.getDatasourceClass())
+                .getData(readRequest.getIdentifier()));
     }
 
     @Override
-    public void writeBytes(DALWriteRequest writeRequest) {
-        DALConfigWriteRequest dalConfigWriteRequest = (DALConfigWriteRequest) writeRequest;
-        dalConfigWriteRequest.getDataSource().writeBytes(dalConfigWriteRequest.getKey(),dalConfigWriteRequest.getData().getBytes());
+    public void writeBytes(ConfigWriteRequest writeRequest) {
+        DatasourceLibrary.get().getDatasource(writeRequest.getDatasourceClass())
+                .writeData(writeRequest.getKey(), writeRequest.getData());
     }
 
-    @Override
-    public DALResponse readBytes(DALReadRequest readRequest) {
-        String configValue = new String(DatasourceLibrary.get().getDatasource(
-                readRequest.getDatasource()).getBytes(readRequest.getIdentifier()), StandardCharsets.UTF_8);
-        return new DALConfigResponse(configValue);
-    }
 }
 ```
 ### Datasource (Postgres)
 ```java
-public class ConfigDB implements DataSource {
+public class ConfigDB implements DataSource<String> {
 
 
-    private final Connection connection;
-    private final HashMap<String, PreparedStatement> preparedStatements = new HashMap<>();
+    private final ConfigRepository configRepository = new ConfigRepository();
 
-    public ConfigDB() {
-        try {
-            connection = setupConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        this.initialSetup();
-    }
-
-    private Connection setupConnection() throws SQLException {
-        var DB_SERVER = System.getProperty(DatabaseStrings.DatabaseEnv.ConfigDB.DB_SERVER);
-        var DB_PORT = System.getProperty(DatabaseStrings.DatabaseEnv.ConfigDB.DB_PORT);
-        var DB_USER = System.getProperty(DatabaseStrings.DatabaseEnv.ConfigDB.DB_USER);
-        var DB_PASSWORD = System.getProperty(DatabaseStrings.DatabaseEnv.ConfigDB.DB_PASSWORD);
-        return DriverManager.getConnection(DatabaseStrings.CONNECTION_STRING
-                .formatted(DatabaseStrings.Databases.POSTGRES, DB_SERVER, DB_PORT), DB_USER, DB_PASSWORD);
-    }
-
-    private void initialSetup() {
-        try {
-            this.createStatements();
-            this.createTables();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void createStatements() throws SQLException {
-        this.preparedStatements.put(StatementQuerries.CREATE_SCHEMA,
-                this.connection.prepareStatement(StatementQuerries.CREATE_SCHEMA));
-        this.preparedStatements.put(StatementQuerries.CREATE_TABLE,
-                this.connection.prepareStatement(StatementQuerries.CREATE_TABLE));
-        this.preparedStatements.put(StatementQuerries.SELECT_VALUE,
-                this.connection.prepareStatement(StatementQuerries.SELECT_VALUE));
-        this.preparedStatements.put(StatementQuerries.INSERT_VALUE,
-                this.connection.prepareStatement(StatementQuerries.INSERT_VALUE));
-    }
-
-    private void createTables() throws SQLException {
-        this.preparedStatements.get(StatementQuerries.CREATE_SCHEMA).execute();
-        this.preparedStatements.get(StatementQuerries.CREATE_TABLE).execute();
+    @Override
+    public String getData(String identifier) {
+        return configRepository.getValue(identifier);
     }
 
     @Override
-    public DALWriteScope[] getSupportedWriteScopes() {
-        return new DALWriteScope[]{DALWriteScope.PERSISTENT};
+    public void writeData(String key, String value) {
+        configRepository.saveValue(key, value);
     }
 
-    @Override
-    public byte[] getBytes(String identifier) {
-        try {
-            this.preparedStatements.get(StatementQuerries.SELECT_VALUE).setString(1, identifier);
-            ResultSet resultSet = this.preparedStatements.get(StatementQuerries.SELECT_VALUE).executeQuery();
-            resultSet.next();
-            String result = resultSet.getString("value");
-            return result.getBytes(StandardCharsets.UTF_8);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new byte[0];
+
+}
+```
+
+### Das Repository
+``` java
+public class ConfigRepository {
+
+    Repository<ConfigEntry> configEntryRepository = Repository.create(ConfigEntry.class);
+
+    public String getValue(String key){
+        return this.configEntryRepository.query().filter(new MatchFilter("key",key))
+                .database().findAll().get(0).getValue();
     }
 
-    @Override
-    public void writeBytes(String key, byte[] value) {
-        try {
-            PreparedStatement statement = this.preparedStatements.get(StatementQuerries.INSERT_VALUE);
-            statement.setString(1, key);
-            statement.setString(2, new String(value, StandardCharsets.UTF_8));
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void saveValue(String key, String value){
+        this.configEntryRepository.query().create(new ConfigEntry(key, value));
     }
 
-    private interface StatementQuerries {
+}
+```
+### Das Model
+```java
+@AllArgsConstructor
+@Getter
+public class ConfigEntry {
 
-        String schema = System.getProperty(DatabaseStrings.DatabaseEnv.ConfigDB.DB_SCHEMA);
-        String CREATE_SCHEMA = "CREATE SCHEMA IF NOT EXISTS %s".formatted(schema);
-        String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS %s.config_values (key TEXT PRIMARY KEY, value TEXT)".formatted(schema);
-        String SELECT_VALUE = "SELECT value FROM %s.config_values WHERE key = ?".formatted(schema);
-        String INSERT_VALUE = "INSERT INTO %s.config_values (key, value) VALUES (?,?)".formatted(schema);
-    }
+    @PrimaryKey
+    String key;
+    String value;
 
 }
 ```
 ### Response
 ```java
-public class DALConfigResponse implements DALResponse<String> {
-
-    private final String data;
-
-    public DALConfigResponse(String data) {
-        this.data = data;
-    }
-
-    @Override
-    public String getData() {
-        return this.data;
-    }
-
-}
+public record ConfigResponse(String data) implements DALResponse<String> { }
 ```
 
 ### Usage
 ```java
-DAL.get().save(new DALConfigWriteRequest("Key", "Value"));
+DAL.get().save(new ConfigWriteRequest("mykey","myvalue"));
 ```
 ```java
-String value = (String) DAL.get().read(new DALConfigReadRequest("Key")).getData();
+ConfigResponse response = DAL.get().read(new ConfigReadRequest("mykey"));
 ```
 ### ORM (Evelon)
 Die ist eine Library, welche aus Klassen Datenbanktabellen (3. Normalform) generiert. Dies bietet sich besonders für Datasources an.
+Die Nutzung ist in der Datasource des Beispiel zu erkennen.
 
 [Offizielle Dokumentation](https://github.com/ByteMCNetzwerk/evelon/wiki)
