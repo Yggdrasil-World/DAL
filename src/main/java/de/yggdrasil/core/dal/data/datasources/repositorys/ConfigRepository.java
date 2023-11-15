@@ -2,8 +2,10 @@ package de.yggdrasil.core.dal.data.datasources.repositorys;
 
 import de.yggdrasil.core.dal.data.datasources.models.ConfigEntry;
 import net.bytemc.evelon.repository.Repository;
+import net.bytemc.evelon.repository.annotations.Entity;
 import net.bytemc.evelon.repository.filters.MatchFilter;
 
+@Entity(name = "config")
 public class ConfigRepository {
 
     Repository<ConfigEntry> configEntryRepository = Repository.create(ConfigEntry.class);
