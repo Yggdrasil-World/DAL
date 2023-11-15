@@ -91,7 +91,7 @@ class MyResponseClass implements DALResponse<T> {
 Datasources können sowohl persistente (z.B. MySQL-Datenbank) als auch In-Memory Speicher (z.B. RabbitMQ) sein.
 Wie auch die Adapter werden Datasources automatisch gefunden, solange sie public sind und einen no-Args Constrcutor haben.
 ```java
-class MyDataSourceClass implements DataSource {
+class MyDataSourceClass implements DataSource<T> {
 
     T getData(String identifier){
         // die Datasource soll einen mit dem identifier verbundenen Wert zurückgeben
