@@ -188,6 +188,7 @@ public class ConfigDB implements DataSource<String> {
 
 ### Das Repository
 ``` java
+@Entity(name = "config")
 public class ConfigRepository {
 
     Repository<ConfigEntry> configEntryRepository = Repository.create(ConfigEntry.class);
