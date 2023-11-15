@@ -2,6 +2,7 @@ package de.yggdrasil.core.dal.adapter;
 
 import de.yggdrasil.core.dal.exceptions.DuplicateAdapterForClassException;
 import de.yggdrasil.core.dal.strings.logging.AdapterLibraryLogger;
+import de.yggdrasil.core.dal.utils.ClassCollector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +20,7 @@ public class AdapterLibrary {
     }
 
     private void setup(){
-        this.addAdapterCollection(new DefaultAdapterCollector());
+        this.addAdapterCollection(new ClassCollector());
     }
 
     public void addAdapterCollection(AdapterCollector collector){

@@ -4,7 +4,6 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
-import de.yggdrasil.core.dal.data.DALWriteScope;
 import de.yggdrasil.core.dal.data.EventDataSource;
 import de.yggdrasil.core.dal.data.HideFromDefaultCollector;
 import de.yggdrasil.core.dal.data.event.DALDefaultEventBus;
@@ -12,14 +11,13 @@ import de.yggdrasil.core.dal.data.event.DALEventbus;
 import de.yggdrasil.core.dal.data.event.DataSourceDataListener;
 import de.yggdrasil.core.dal.data.event.events.RabbitMQDataReceivedEvent;
 import de.yggdrasil.core.dal.data.network.rabbitmq.RabbitMQMessage;
-import de.yggdrasil.core.dal.data.network.rabbitmq.RabbitMQPackage;
 import de.yggdrasil.core.dal.data.network.rabbitmq.RabbitMQPackageReader;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 @HideFromDefaultCollector
-public class RabbitMQ implements EventDataSource {
+public class RabbitMQ implements EventDataSource<RabbitMQMessage, DALDefaultEventBus> {
 
     private final String queueName;
     private byte[] lastMessage;
@@ -47,33 +45,19 @@ public class RabbitMQ implements EventDataSource {
     }
 
     @Override
-    public DALWriteScope[] getSupportedWriteScopes() {
-        return new DALWriteScope[]{DALWriteScope.RUNTIME_SYNCHRONISED};
+    public RabbitMQMessage getData(String identifier) {
+        return null;
     }
 
     @Override
-    public byte[] getBytes(String identifier) {
-        return lastMessage;
+    public void writeData(String key, RabbitMQMessage value) {
+
     }
 
-    @Override
-    public void writeBytes(String key, byte[] value) {
-        try {
-            this.channel.basicPublish("", queueName, null,
-                    new RabbitMQPackage(new RabbitMQMessage(key, value)).toBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public void registerEventListener(DataSourceDataListener listener) {
         this.eventbus.registerListener(listener);
-    }
-
-    @Override
-    public DALEventbus getEventBus() {
-        return this.eventbus;
     }
 
 }

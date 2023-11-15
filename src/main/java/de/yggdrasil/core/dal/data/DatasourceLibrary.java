@@ -1,5 +1,6 @@
 package de.yggdrasil.core.dal.data;
 import de.yggdrasil.core.dal.strings.logging.DatasourceLibraryLogger;
+import de.yggdrasil.core.dal.utils.ClassCollector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,7 +10,7 @@ public class DatasourceLibrary {
 
     private Logger logger = LogManager.getLogger(DatasourceLibrary.class);
 
-    private final HashMap<Class, DataSource> dataSources = new HashMap<>();
+    private final HashMap<Class<? extends DataSource>, DataSource> dataSources = new HashMap<>();
     private final static DatasourceLibrary instance = new DatasourceLibrary();
 
     {
@@ -17,7 +18,7 @@ public class DatasourceLibrary {
     }
 
     private void setup(){
-        this.addDatasourceCollection(new DefaultDatasourceCollector());
+        this.addDatasourceCollection(new ClassCollector());
     }
 
     public void addDatasourceCollection(DatasourceCollector collector){
@@ -39,8 +40,8 @@ public class DatasourceLibrary {
         }
     }
 
-    public DataSource getDatasource(Class<? extends DataSource> datasourceClass){
-        return dataSources.get(datasourceClass);
+    public <T extends DataSource> T getDatasource(Class<T> datasourceClass){
+        return (T) dataSources.get(datasourceClass);
     }
 
     public static DatasourceLibrary get() {

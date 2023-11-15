@@ -1,12 +1,10 @@
 package de.yggdrasil.core.dal.data;
 
 @DALDatasource
-public interface DataSource {
+public interface DataSource<T> {
 
-    DALWriteScope[] getSupportedWriteScopes();
+    T getData(String identifier);
 
-    byte[] getBytes(String identifier);
-
-    void writeBytes(String key, byte[] value);
+    void writeData(String key, T value);
 
 }

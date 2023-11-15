@@ -19,12 +19,12 @@ public class DALDefaultEventBus implements DALEventbus{
 
     @Override
     public void registerListener(DataSourceDataListener listener) {
-        if (!this.eventListeners.containsKey(listener.getSubscribedEvent())){
+        if (!this.eventListeners.containsKey(listener.getEventClass())){
             List<DataSourceDataListener> listeners = new ArrayList<>();
             listeners.add(listener);
-            this.eventListeners.put(listener.getSubscribedEvent(), listeners);
+            this.eventListeners.put(listener.getEventClass(), listeners);
         } else {
-            this.eventListeners.get(listener.getSubscribedEvent()).add(listener);
+            this.eventListeners.get(listener.getEventClass()).add(listener);
         }
     }
 }

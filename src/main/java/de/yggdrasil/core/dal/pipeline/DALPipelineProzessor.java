@@ -6,6 +6,7 @@ import de.yggdrasil.core.dal.requests.DALReadRequest;
 import de.yggdrasil.core.dal.requests.DALWriteRequest;
 import de.yggdrasil.core.dal.responses.DALResponse;
 import de.yggdrasil.core.dal.strings.logging.DALPipelineProzessorLogger;
+import de.yggdrasil.core.dal.utils.ClassCollector;
 import de.yggdrasil.core.dal.utils.ReflectionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +26,7 @@ public class DALPipelineProzessor {
     }
 
     private void setup() {
-        this.addPipelineCollection(new DefaultPipelineCollector());
+        this.addPipelineCollection(new ClassCollector());
     }
 
     public <T extends DALReadRequest, V extends DALResponse> V readData(T readRequest) throws MissingPipelineException {
