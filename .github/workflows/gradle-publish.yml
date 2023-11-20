@@ -38,6 +38,12 @@ jobs:
       with:
         arguments: build
 
+    - name: Check environment variables
+      run: |
+        echo "USERNAME is set to a non-empty value? ${{ env.USERNAME != '' }}"
+        echo "TOKEN is set to a non-empty value? ${{ env.TOKEN != '' }}"
+
+
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
     - name: Publish to GitHub Packages
