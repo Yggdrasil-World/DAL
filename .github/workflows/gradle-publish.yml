@@ -30,22 +30,11 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
     - name: List directory contents
-      run: |
-         ls -la
-         chmod +x gradlew
+      run: chmod +x gradlew
     - name: Build with Gradle
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
         arguments: build
-
-    - name: Check environment variables
-      run: |
-        echo "USERNAME is set to a non-empty value? ${{ env.USERNAME != '' }}"
-        echo "TOKEN is set to a non-empty value? ${{ env.TOKEN != '' }}"
-      env:
-        USERNAME: Invincible2211
-        TOKEN: ${{ secrets.GRADLE_GITHUB_TOKEN }}
-
 
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
