@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+    - main
+    - dev
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: Gradle clean build
+      run: gradle clean build
