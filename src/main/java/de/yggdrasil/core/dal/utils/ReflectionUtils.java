@@ -11,16 +11,11 @@ public class ReflectionUtils {
     public static <T> Class<T> getMatchingGenericTypeArgument(Class<?> clazz, Class<?> expectedInterface) {
         Type[] genericInterfaces = clazz.getGenericInterfaces();
         for (Type genericInterface : genericInterfaces) {
-            if (genericInterface instanceof ParameterizedType) {
-                ParameterizedType parameterizedType = (ParameterizedType) genericInterface;
-                if (expectedInterface.isAssignableFrom((Class<?>) parameterizedType.getRawType())) {
-                    Type[] typeArguments = parameterizedType.getActualTypeArguments();
-                    for (Type typeArgument : typeArguments) {
-                        if (DALRequest.class.isAssignableFrom(resolveClass(typeArgument))) {
-                            return (Class<T>) resolveClass(typeArgument);
-                        }
-                    }
-                }
+            if (!(genericInterface instanceof ParameterizedType parameterizedType)) continue;
+            if (!expectedInterface.isAssignableFrom((Class<?>) parameterizedType.getRawType())) continue;
+            for (Type typeArgument : parameterizedType.getActualTypeArguments()) {
+                if (!DALRequest.class.isAssignableFrom(resolveClass(typeArgument))) continue;
+                return (Class<T>) resolveClass(typeArgument);
             }
         }
         return null;

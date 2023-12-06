@@ -4,6 +4,6 @@ import de.yggdrasil.core.dal.requests.DALWriteRequest;
 
 public interface WritePipeline<T extends DALWriteRequest> extends Pipeline{
 
-    void writeBytes(T writeRequest);
+    void writeData(T writeRequest);
 
 }

@@ -5,6 +5,6 @@ import de.yggdrasil.core.dal.responses.DALResponse;
 
 public interface ReadPipeline<T extends DALReadRequest,V extends DALResponse> extends Pipeline{
 
-    V readBytes(T readRequest);
+    V readData(T readRequest);
 
 }

@@ -33,7 +33,7 @@ public class DALPipelineProzessor {
         try {
             Class<? extends ReadPipeline<T, V>> pipelineClass = (Class<? extends ReadPipeline<T, V>>) this.readPipelineMap.get(readRequest.getClass());
             ReadPipeline<T, V> pipeline = pipelineClass.getDeclaredConstructor().newInstance();
-            return pipeline.readBytes(readRequest);
+            return pipeline.readData(readRequest);
         } catch (InstantiationException | InvocationTargetException | NoSuchMethodException |
                  IllegalAccessException e) {
             throw new RuntimeException(e);
@@ -42,7 +42,7 @@ public class DALPipelineProzessor {
 
     public void writeData(DALWriteRequest writeRequest) throws MissingPipelineException {
         try {
-            this.writePipelineMap.get(writeRequest.getClass()).getDeclaredConstructor().newInstance().writeBytes(writeRequest);
+            this.writePipelineMap.get(writeRequest.getClass()).getDeclaredConstructor().newInstance().writeData(writeRequest);
         } catch (InstantiationException | NoSuchMethodException | InvocationTargetException |
                  IllegalAccessException e) {
             throw new RuntimeException(e);
