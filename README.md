@@ -16,11 +16,6 @@ repositories {
 }
 
 ...
-```
-Es wird empfohlen, einen Eintrag in der globalen gradle.properties (Users\USERNAME\.gradle\gradle.properties) anzulegen:
-```
-gpr.user=GITHUB_USERNAME
-gpr.key=PERSONAL_ACCESS_TOKEN
 
 dependencies {
     ...
@@ -30,6 +25,11 @@ dependencies {
 
 ```
 
+Es wird empfohlen, einen Eintrag in der globalen gradle.properties (Users\USERNAME\.gradle\gradle.properties) anzulegen:
+```
+gpr.user=GITHUB_USERNAME
+gpr.key=PERSONAL_ACCESS_TOKEN
+```
 ## Verwendung
 
 ```**Alle Klassen sind darauf ausgelegt, dass alle Generic Types definiert werden, ansonsten kann die funktionalität nicht garantiert werden!**```
