@@ -1,5 +1,35 @@
 # DAL
 
+## Einbindung
+
+```gradle
+repositories {
+    ...
+    maven{ url 'https://artifactory.bytemc.de/artifactory/bytemc-public' }
+    maven {
+        url 'https://maven.pkg.github.com/Yggdrasil-World/DAL'
+        credentials {
+            username = project.findProperty("gpr.user")
+            password = project.findProperty("gpr.key")
+        }
+    }
+}
+
+...
+
+dependencies {
+    ...
+    implementation 'net.bytemc:evelon:[version]' // z.B.: 1.0.1
+    implementation 'de.yggdrasil.core.dal:dal:[version]' //z.B.: 1.0.1
+}
+
+```
+
+Es wird empfohlen, einen Eintrag in der globalen gradle.properties (Users\USERNAME\.gradle\gradle.properties) anzulegen:
+```
+gpr.user=GITHUB_USERNAME
+gpr.key=PERSONAL_ACCESS_TOKEN
+```
 ## Verwendung
 
 ```**Alle Klassen sind darauf ausgelegt, dass alle Generic Types definiert werden, ansonsten kann die funktionalität nicht garantiert werden!**```
