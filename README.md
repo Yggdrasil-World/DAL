@@ -218,7 +218,6 @@ public class ConfigDB implements DataSource<String> {
 
 ### Das Repository
 ``` java
-@Entity(name = "config")
 public class ConfigRepository {
 
     Repository<ConfigEntry> configEntryRepository = Repository.create(ConfigEntry.class);
@@ -238,6 +237,7 @@ public class ConfigRepository {
 ```java
 @AllArgsConstructor
 @Getter
+@Entity(name = "config")
 public class ConfigEntry {
 
     @PrimaryKey
