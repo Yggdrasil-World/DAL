@@ -25,7 +25,7 @@ dependencies {
 
 ```
 
-Es wird empfohlen, einen Eintrag in der globalen gradle.properties (Users\USERNAME\.gradle\gradle.properties) anzulegen:
+Es wird empfohlen, einen Eintrag in der globalen gradle.properties (~/.gradle/gradle.properties) anzulegen:
 ```
 gpr.user=GITHUB_USERNAME
 gpr.key=PERSONAL_ACCESS_TOKEN
