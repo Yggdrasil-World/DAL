@@ -1,5 +1,8 @@
 package de.yggdrasil.core.dal.strings;
 
+/**
+ * This interface provides string constants related to databases and their configurations.
+ */
 public interface DatabaseStrings {
 
     String CONNECTION_STRING = "jdbc:%s://%s:%s/";
