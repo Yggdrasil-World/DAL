@@ -1,5 +1,7 @@
 package de.yggdrasil.core.dal.utils;
 
+import java.util.Arrays;
+
 /**
  * This class provides utility methods for working with byte arrays.
  */
