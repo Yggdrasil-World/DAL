@@ -20,7 +20,7 @@ public class DAL {
     private final DALPipelineProzessor pipelineProzessor = new DALPipelineProzessor();
 
     /**
-     * Saves the data using a write request.
+     * Saves data using a write request.
      *
      * @param saveRequest the write request containing the data to be saved
      */

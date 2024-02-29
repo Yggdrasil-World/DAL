@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * The ClassCollector class is responsible for collecting classes annotated with specific annotations.
+ * The ClassCollector class is responsible for collecting classes annotated with specific annotations and assignable from specific class.
  * It implements default implementations for the AdapterCollector, PipelineCollector, and DatasourceCollector interfaces.
  */
 public class ClassCollector implements AdapterCollector, PipelineCollector, DatasourceCollector {

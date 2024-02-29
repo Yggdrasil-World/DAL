@@ -1,7 +1,7 @@
 package de.yggdrasil.core.dal.data.network.rabbitmq;
 
 import de.yggdrasil.core.dal.data.network.Package;
-import de.yggdrasil.core.dal.utils.ByteUtils;
+import de.yggdrasil.core.dal.utils.ByteArrayUtils;
 
 import java.nio.ByteBuffer;
 
@@ -20,7 +20,7 @@ public class RabbitMQPackage implements Package {
      */
     public RabbitMQPackage(RabbitMQMessage message){
         header = ByteBuffer.allocate(4).putInt(message.key().length()).array();
-        data = ByteUtils.connectByteArrays(message.key().getBytes(), message.content());
+        data = ByteArrayUtils.connectByteArrays(message.key().getBytes(), message.content());
     }
 
     /**
@@ -30,7 +30,7 @@ public class RabbitMQPackage implements Package {
      */
     @Override
     public byte[] toBytes() {
-        return ByteUtils.connectByteArrays(header, data);
+        return ByteArrayUtils.connectByteArrays(header, data);
     }
 
 
