@@ -30,7 +30,7 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
     - name: Set RELEASE_VERSION environment variable
-      run: echo "RELEASE_VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+      run: echo "RELEASE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
     - name: List directory contents
       run: chmod +x gradlew
     - name: Build with Gradle
