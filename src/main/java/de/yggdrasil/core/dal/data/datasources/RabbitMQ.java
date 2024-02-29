@@ -5,9 +5,9 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 import de.yggdrasil.core.dal.data.EventDataSource;
-import de.yggdrasil.core.dal.data.HideFromDefaultCollector;
+import de.yggdrasil.core.dal.data.HideFromDefaultClassCollector;
 import de.yggdrasil.core.dal.data.event.DALDefaultEventBus;
-import de.yggdrasil.core.dal.data.event.DALEventbus;
+import de.yggdrasil.core.dal.data.event.DALEventBus;
 import de.yggdrasil.core.dal.data.event.DataSourceDataListener;
 import de.yggdrasil.core.dal.data.event.events.RabbitMQDataReceivedEvent;
 import de.yggdrasil.core.dal.data.network.rabbitmq.RabbitMQMessage;
@@ -20,25 +20,24 @@ import java.util.concurrent.TimeoutException;
  * The RabbitMQ class represents a RabbitMQ data source that implements the EventDataSource interface.
  * It provides methods for retrieving and writing data to RabbitMQ, as well as registering event listeners.
  */
-@HideFromDefaultCollector
+@HideFromDefaultClassCollector
 public class RabbitMQ implements EventDataSource<RabbitMQMessage, DALDefaultEventBus> {
 
     private final String queueName;
     private byte[] lastMessage;
     private Channel channel;
-    private final DALEventbus eventbus = new DALDefaultEventBus();
+    private final DALEventBus eventbus = new DALDefaultEventBus();
 
     /**
-     * The callback variable is a private final variable of type DeliverCallback.
-     * It is used to handle incoming messages from RabbitMQ.
+     * used to handle incoming messages from RabbitMQ.
      */
     private final DeliverCallback callback = (consumerTag, delivery) -> {
         RabbitMQMessage message = RabbitMQPackageReader.readPackage(delivery.getBody());
-        this.eventbus.triggerEvent(new RabbitMQDataReceivedEvent(this, message));
+        this.eventbus.fireEvent(new RabbitMQDataReceivedEvent(this, message));
     };
 
     /**
-     * The RabbitMQ constructor creates a RabbitMQ object with the specified queue name.
+     * Creates a RabbitMQ object with the specified queue name.
      * It sets up the RabbitMQ connection, channel, and consumer to receive messages from the specified queue.
      *
      * @param queueName the name of the queue to listen for messages

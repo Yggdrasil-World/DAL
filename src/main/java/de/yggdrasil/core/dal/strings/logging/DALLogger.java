@@ -1,31 +1,25 @@
 package de.yggdrasil.core.dal.strings.logging;
 
 /**
- * DALLogger is an interface that provides constants for logging messages related to the DAL (Data Access Layer) operations.
- * It contains the following constants:
- * - DAL_SAVE: A log message indicating a DAL save request, with a placeholder for the request class name.
- * - DAL_READ: A log message indicating a DAL load request, with a placeholder for the request class name.
- * - DAL_EXCEPTION_PIPELINE: A log message indicating that no pipeline is configured for a request, with a placeholder for the request class name.
- *
- * Usage Example:
- * // Saving data using a write request
- * DALWriteRequest saveRequest = new DALWriteRequestImpl();
- * DALLogger logger = new DALLoggerImpl();
- * logger.info(DALLogger.DAL_SAVE.formatted(saveRequest.getClass().getName()));
- *
- * // Reading data using a read request
- * DALReadRequest readRequest = new DALReadRequestImpl();
- * logger.info(DALLogger.DAL_READ.formatted(readRequest.getClass().getName()));
- *
- * // Handling a missing pipeline exception
- * logger.error(DALLogger.DAL_EXCEPTION_PIPELINE.formatted(request.getClass().getName()));
+ * The DALLogger interface provides constants for logging messages related to the DAL operations.
  */
 public interface DALLogger {
 
+    /**
+     * Example: DAL.get().save(new ConfigWriteRequest("ExampleKey", "Value")) -> "DAL Save Request: ConfigWriteRequest"
+     */
     String DAL_SAVE = "DAL Save Request: %s";
 
-    String DAL_READ = "DAL Load Request: %s";
+    /**
+     * Example: DAL.get().read(new ConfigReadRequest("ExampleKey")) -> "DAL Read Request: ConfigReadRequest"
+     */
+    String DAL_READ = "DAL Read Request: %s";
 
+    /**
+     * Example
+     * If there is not a pipeline set up for a "ConfigReadRequest",
+     * The output of this string would be: "No Pipeline for Request ConfigReadRequest configured."
+     */
     String DAL_EXCEPTION_PIPELINE = "No Pipeline for Request %s configured.";
 
 }

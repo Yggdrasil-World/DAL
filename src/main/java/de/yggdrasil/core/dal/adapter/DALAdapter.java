@@ -53,7 +53,7 @@ import java.lang.annotation.*;
  *
  * }
  *
- * // Class implementing Adapter interface but annotated with HideFromDefaultCollector
+ * // Class implementing Adapter interface but annotated with HideFromDefaultClassCollector
  * @DALAdapter
  * @HideFromDefaultCollector
  * public class HiddenAdapter implements Adapter<String> {

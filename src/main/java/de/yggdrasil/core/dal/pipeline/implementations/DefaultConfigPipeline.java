@@ -1,16 +1,12 @@
 package de.yggdrasil.core.dal.pipeline.implementations;
 
-import de.yggdrasil.core.dal.data.DatasourceLibrary;
+import de.yggdrasil.core.dal.data.DatasourceInstanceCollection;
 import de.yggdrasil.core.dal.pipeline.ReadPipeline;
 import de.yggdrasil.core.dal.pipeline.WritePipeline;
 import de.yggdrasil.core.dal.requests.implementations.ConfigReadRequest;
 import de.yggdrasil.core.dal.requests.implementations.ConfigWriteRequest;
 import de.yggdrasil.core.dal.responses.implementations.ConfigResponse;
 
-/**
- * The DefaultConfigPipeline class represents a default implementation of a pipeline for reading and writing configuration data.
- * It implements the ReadPipeline interface for reading data and the WritePipeline interface for writing data.
- */
 public class DefaultConfigPipeline implements
         ReadPipeline<ConfigReadRequest, ConfigResponse>, WritePipeline<ConfigWriteRequest> {
 
@@ -22,7 +18,7 @@ public class DefaultConfigPipeline implements
      */
     @Override
     public ConfigResponse readData(ConfigReadRequest readRequest) {
-        return new ConfigResponse(DatasourceLibrary.get()
+        return new ConfigResponse(DatasourceInstanceCollection.get()
                 .getDatasource(readRequest.getDatasourceClass())
                 .getData(readRequest.getIdentifier()));
     }
@@ -34,7 +30,7 @@ public class DefaultConfigPipeline implements
      */
     @Override
     public void writeData(ConfigWriteRequest writeRequest) {
-        DatasourceLibrary.get().getDatasource(writeRequest.getDatasourceClass())
+        DatasourceInstanceCollection.get().getDatasource(writeRequest.getDatasourceClass())
                 .writeData(writeRequest.getKey(), writeRequest.getData());
     }
 

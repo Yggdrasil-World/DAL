@@ -6,7 +6,7 @@ import de.yggdrasil.core.dal.adapter.DALAdapter;
 import de.yggdrasil.core.dal.data.DALDatasource;
 import de.yggdrasil.core.dal.data.DataSource;
 import de.yggdrasil.core.dal.data.DatasourceCollector;
-import de.yggdrasil.core.dal.data.HideFromDefaultCollector;
+import de.yggdrasil.core.dal.data.HideFromDefaultClassCollector;
 import de.yggdrasil.core.dal.pipeline.DALPipeline;
 import de.yggdrasil.core.dal.pipeline.Pipeline;
 import de.yggdrasil.core.dal.pipeline.PipelineCollector;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class ClassCollector implements AdapterCollector, PipelineCollector, DatasourceCollector {
 
     private static Reflections reflections = new Reflections("de.yggdrasil");
-    private static Set<Class<?>> ignored = reflections.getTypesAnnotatedWith(HideFromDefaultCollector.class);
+    private static Set<Class<?>> ignored = reflections.getTypesAnnotatedWith(HideFromDefaultClassCollector.class);
 
     /**
      * Collects classes that are annotated with a specific annotation and are assignable from a given type.

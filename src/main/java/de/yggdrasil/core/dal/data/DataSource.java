@@ -17,7 +17,7 @@ public interface DataSource<T> {
      * Retrieves data from a data source using an identifier and a read request.
      *
      * @param identifier the identifier used to retrieve data from the data source
-     * @param readRequest the read request to apply when retrieving the data (optional)
+     * @param readRequest the read request to apply when retrieving the data (optional to use it)
      * @return the retrieved data
      */
     default T getData(String identifier, DALReadRequest readRequest){
@@ -32,7 +32,7 @@ public interface DataSource<T> {
      *
      * @param identifier the identifier used to write data to the data source
      * @param value the value to be written to the data source
-     * @param writeRequest the write request to apply when writing the data (optional)
+     * @param writeRequest the write request to apply when writing the data (optional to use it)
      */
     default void writeData(String identifier, T value, DALWriteRequest writeRequest){
         writeData(identifier, value);

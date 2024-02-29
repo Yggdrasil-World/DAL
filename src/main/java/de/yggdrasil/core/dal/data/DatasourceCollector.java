@@ -3,17 +3,14 @@ package de.yggdrasil.core.dal.data;
 import java.util.Set;
 
 /**
- * The DatasourceCollector interface is responsible for collecting classes that are annotated with the `DALDatasource` annotation and are assignable from the `DataSource` class.
- *
- * This interface extends the AdapterCollector and PipelineCollector interfaces.
- * It provides a method `collectDatasources()` which returns a set of classes that are annotated with `DALDatasource` and are assignable from `DataSource`.
+ * The DataSourceCollector interface is responsible for collecting `Datasource` classes
  */
 public interface DatasourceCollector {
 
     /**
-     * Collects all classes that are annotated with the `DALDatasource` annotation and are assignable from the `DataSource` class.
+     * Collects Datasource classes.
      *
-     * @return a set of classes that are annotated with `DALDatasource` and are assignable from `DataSource`
+     * @return a set of classes that are assignable from the `Datasource` class.
      */
     Set<Class<? extends DataSource>> collectDatasources();
 

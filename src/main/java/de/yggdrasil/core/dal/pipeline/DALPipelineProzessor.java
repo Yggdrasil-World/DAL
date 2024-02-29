@@ -1,11 +1,11 @@
 package de.yggdrasil.core.dal.pipeline;
 
-import de.yggdrasil.core.dal.adapter.AdapterLibrary;
+import de.yggdrasil.core.dal.adapter.AdapterInstanceCollection;
 import de.yggdrasil.core.dal.exceptions.MissingPipelineException;
 import de.yggdrasil.core.dal.requests.DALReadRequest;
 import de.yggdrasil.core.dal.requests.DALWriteRequest;
 import de.yggdrasil.core.dal.responses.DALResponse;
-import de.yggdrasil.core.dal.strings.logging.DALPipelineProzessorLogger;
+import de.yggdrasil.core.dal.strings.logging.DALPipelineProzessorLoggerMessages;
 import de.yggdrasil.core.dal.utils.ClassCollector;
 import de.yggdrasil.core.dal.utils.ReflectionUtils;
 import org.apache.logging.log4j.LogManager;
@@ -15,12 +15,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 /**
- * The DALPipelineProzessor class represents a processor for data access layer (DAL) pipelines.
+ * The DALPipelineProzessor class represents a processor for DAL pipelines.
  * It provides methods for reading and writing data using the defined pipelines.
  */
 public class DALPipelineProzessor {
 
-    private final AdapterLibrary library = new AdapterLibrary();
+    private final AdapterInstanceCollection library = new AdapterInstanceCollection();
     private Logger logger = LogManager.getLogger(DALPipelineProzessor.class);
     private HashMap<Class<? extends DALWriteRequest>, Class<? extends WritePipeline>> writePipelineMap = new HashMap<>();
     private HashMap<Class<? extends DALReadRequest>, Class<? extends ReadPipeline<?, ?>>> readPipelineMap = new HashMap<>();
@@ -32,7 +32,6 @@ public class DALPipelineProzessor {
     /**
      * Initializes the pipeline collection by adding a ClassCollector instance.
      * This method is used internally and is called during object initialization.
-     * It adds the ClassCollector instance to the pipeline collection.
      */
     private void setup() {
         this.addPipelineCollection(new ClassCollector());
@@ -85,8 +84,8 @@ public class DALPipelineProzessor {
             this.addPipeline(pipelineClass);
             count++;
         }
-        logger.info(DALPipelineProzessorLogger.ADD_PIPELINE_COLLECTION.formatted(count, readPipelineMap.size()));
-        logger.info(DALPipelineProzessorLogger.ADD_PIPELINE_COLLECTION.formatted(count, writePipelineMap.size()));
+        logger.info(DALPipelineProzessorLoggerMessages.ADD_PIPELINE_COLLECTION.formatted(count, readPipelineMap.size()));
+        logger.info(DALPipelineProzessorLoggerMessages.ADD_PIPELINE_COLLECTION.formatted(count, writePipelineMap.size()));
     }
 
     /**

@@ -34,8 +34,10 @@ public interface Adapter<T> {
      * @return the class object representing the type of object that the adapter works with
      */
     default Class<T> getAdapterType() {
-        return (Class<T>) ((ParameterizedType) getClass().getGenericInterfaces()[0])
-                .getActualTypeArguments()[0];
+        if (getClass().getGenericInterfaces().length == 0
+                || !(getClass().getGenericInterfaces()[0] instanceof ParameterizedType type)) return null;
+        if (type.getActualTypeArguments().length == 0) return null;
+        return (Class<T>) type.getActualTypeArguments()[0];
     }
 
 }

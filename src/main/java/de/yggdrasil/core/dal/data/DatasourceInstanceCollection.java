@@ -7,22 +7,22 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 
 /**
- * The DatasourceLibrary class represents a library of data sources.
+ * The DatasourceInstanceCollection class represents a library of data sources.
  * It provides methods for adding and retrieving data sources.
  */
-public class DatasourceLibrary {
+public class DatasourceInstanceCollection {
 
-    private Logger logger = LogManager.getLogger(DatasourceLibrary.class);
+    private Logger logger = LogManager.getLogger(DatasourceInstanceCollection.class);
 
     private final HashMap<Class<? extends DataSource>, DataSource> dataSources = new HashMap<>();
-    private final static DatasourceLibrary instance = new DatasourceLibrary();
+    private final static DatasourceInstanceCollection instance = new DatasourceInstanceCollection();
 
     {
         setup();
     }
 
     /**
-     * Sets up the DatasourceLibrary by adding a collection of data sources.
+     * Sets up the DatasourceInstanceCollection by adding a collection of data sources.
      *
      * @see #addDatasourceCollection(DatasourceCollector)
      */
@@ -31,7 +31,7 @@ public class DatasourceLibrary {
     }
 
     /**
-     * Adds a collection of data sources to the DatasourceLibrary.
+     * Adds a collection of data sources to the DatasourceInstanceCollection.
      * The data sources are collected using the provided DatasourceCollector.
      *
      * @param collector the DatasourceCollector used to collect the data sources
@@ -72,11 +72,11 @@ public class DatasourceLibrary {
     }
 
     /**
-     * Returns the instance of the DatasourceLibrary class.
+     * Returns the instance of the DatasourceInstanceCollection class.
      *
-     * @return the instance of the DatasourceLibrary class
+     * @return the instance of the DatasourceInstanceCollection class
      */
-    public static DatasourceLibrary get() {
+    public static DatasourceInstanceCollection get() {
         return instance;
     }
 

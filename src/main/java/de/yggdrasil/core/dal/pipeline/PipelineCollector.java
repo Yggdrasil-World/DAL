@@ -3,14 +3,14 @@ package de.yggdrasil.core.dal.pipeline;
 import java.util.Set;
 
 /**
- * The PipelineCollector interface is responsible for collecting classes that are annotated with the `DALPipeline` annotation and are assignable from the `Pipeline` class.
+ * The PipelineCollector interface is responsible for collecting `Pipeline` classes
  */
 public interface PipelineCollector {
 
     /**
-     * Collects classes that are annotated with the {@code DALPipeline} annotation and are assignable from the {@code Pipeline} class.
+     * Collects Pipeline classes.
      *
-     * @return a set of classes that implement the {@code Pipeline} interface
+     * @return a set of classes that are assignable from the `Pipeline` class.
      */
     Set<Class<? extends Pipeline>> collectPipelines();
 

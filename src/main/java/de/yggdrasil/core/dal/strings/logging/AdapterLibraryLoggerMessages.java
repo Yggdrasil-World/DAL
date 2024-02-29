@@ -1,7 +1,7 @@
 package de.yggdrasil.core.dal.strings.logging;
 
 /**
- * The AdapterLibraryLoggerMessages interface provides constants for logging messages related to AdapterLibrary.
+ * The AdapterLibraryLoggerMessages provides constants for logging messages related to the AdapterInstanceCollection.
  */
 public interface AdapterLibraryLoggerMessages {
 

@@ -17,8 +17,10 @@ public interface DataSourceDataListener<T extends DataSourceDataEvent> {
      * @return the class of the event
      */
     default Class<T> getEventClass() {
-        return (Class<T>) ((ParameterizedType) getClass().getGenericInterfaces()[0])
-                .getActualTypeArguments()[0];
+        if (getClass().getGenericInterfaces().length == 0
+                || !(getClass().getGenericInterfaces()[0] instanceof ParameterizedType type)) return null;
+        if (type.getActualTypeArguments().length == 0) return null;
+        return (Class<T>) type.getActualTypeArguments()[0];
     }
 
 }

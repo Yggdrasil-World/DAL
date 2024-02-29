@@ -4,9 +4,6 @@ import de.yggdrasil.core.dal.data.DataSource;
 import de.yggdrasil.core.dal.data.network.rabbitmq.RabbitMQMessage;
 
 /**
- * The RabbitMQDataReceivedEvent class represents an event that is triggered when data is received from RabbitMQ.
- * It implements the DataReceivedEvent interface.
- *
  * This event contains the data source from which the data is received and the RabbitMQ message that contains the received data.
  */
 public class RabbitMQDataReceivedEvent implements DataReceivedEvent{
@@ -14,19 +11,13 @@ public class RabbitMQDataReceivedEvent implements DataReceivedEvent{
     private final DataSource dataSource;
     private final RabbitMQMessage message;
 
-    /**
-     * The RabbitMQDataReceivedEvent class represents an event that is triggered when data is received from RabbitMQ.
-     * It implements the DataReceivedEvent interface.
-     *
-     * This event contains the data source from which the data is received and the RabbitMQ message that contains the received data.
-     */
     public RabbitMQDataReceivedEvent(DataSource dataSource, RabbitMQMessage message){
         this.dataSource = dataSource;
         this.message = message;
     }
 
     /**
-     * Retrieves the data source of the RabbitMQDataReceivedEvent.
+     * Retrieves the data source of the Event.
      *
      * @return the data source from which the data is received
      */
@@ -36,7 +27,7 @@ public class RabbitMQDataReceivedEvent implements DataReceivedEvent{
     }
 
     /**
-     * Retrieves the RabbitMQ message associated with the event.
+     * Retrieves the RabbitMQ message associated with the Event.
      *
      * @return the RabbitMQ message
      */

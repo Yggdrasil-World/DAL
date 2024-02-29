@@ -10,12 +10,12 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 
 /**
- * The AdapterLibrary class is responsible for managing a collection of adapters.
+ * The AdapterInstanceCollection class is responsible for managing a collection of adapters.
  * It allows for adding and retrieving adapters based on their corresponding classes.
  */
-public class AdapterLibrary {
+public class AdapterInstanceCollection {
 
-    private Logger logger = LogManager.getLogger(AdapterLibrary.class);
+    private Logger logger = LogManager.getLogger(AdapterInstanceCollection.class);
 
     private final HashMap<Class, Adapter> adapters = new HashMap<>();
 
@@ -24,14 +24,14 @@ public class AdapterLibrary {
     }
 
     /**
-     * Sets up the AdapterLibrary by adding a collection of adapters.
+     * Sets up the AdapterInstanceCollection by adding a collection of adapters.
      */
     private void setup(){
         this.addAdapterCollection(new ClassCollector());
     }
 
     /**
-     * Adds a collection of adapters to the AdapterLibrary.
+     * Adds a collection of adapters to the AdapterInstanceCollection.
      *
      * @param collector the AdapterCollector instance containing the adapters to be added
      */
@@ -46,10 +46,10 @@ public class AdapterLibrary {
     }
 
     /**
-     * Adds an adapter to the AdapterLibrary.
+     * Adds an adapter to the AdapterInstanceCollection.
      *
      * @param adapterClass the class of the adapter to be added
-     * @throws DuplicateAdapterForClassException if an adapter for the given class already exists in the AdapterLibrary
+     * @throws DuplicateAdapterForClassException if an adapter for the given class already exists in the AdapterInstanceCollection
      */
     private void addAdapter(Class<? extends Adapter> adapterClass){
         try {
@@ -63,7 +63,7 @@ public class AdapterLibrary {
     }
 
     /**
-     * Retrieves the adapter for the given class from the AdapterLibrary.
+     * Retrieves the adapter for the given class from the AdapterInstanceCollection.
      *
      * @param c the class for which to retrieve the adapter
      * @return the adapter corresponding to the given class, or null if no adapter is found
