@@ -1,7 +1,7 @@
 package de.yggdrasil.core.dal.requests;
 
 import de.yggdrasil.core.dal.data.DataSource;
-import java.lang.reflect.ParameterizedType;
+import de.yggdrasil.core.dal.utils.GenericTypeUtils;
 
 /**
  * This interface represents a read request to a data source.
@@ -19,10 +19,7 @@ public interface DALReadRequest<T extends DataSource> extends DALRequest{
      * @return the class of the data source
      */
     default Class<T> getDatasourceClass() {
-        if (getClass().getGenericInterfaces().length == 0
-                || !(getClass().getGenericInterfaces()[0] instanceof ParameterizedType type)) return null;
-        if (type.getActualTypeArguments().length == 0) return null;
-        return (Class<T>) type.getActualTypeArguments()[0];
+        return (Class<T>) GenericTypeUtils.getParameterTypeClass(this.getClass());
     }
 
 }

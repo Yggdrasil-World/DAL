@@ -2,8 +2,7 @@ package de.yggdrasil.core.dal.data;
 
 import de.yggdrasil.core.dal.data.event.DALEventBus;
 import de.yggdrasil.core.dal.data.event.DataSourceDataListener;
-
-import java.lang.reflect.ParameterizedType;
+import de.yggdrasil.core.dal.utils.GenericTypeUtils;
 
 /**
  * The EventDataSource interface extends the DataSource interface and represents a data source that supports event-based communication.
@@ -23,10 +22,7 @@ public interface EventDataSource<T, E extends DALEventBus> extends DataSource<T>
      * @return the class of the event bus
      */
     default Class<E> getEventBusClass() {
-        if (getClass().getGenericInterfaces().length == 0
-                || !(getClass().getGenericInterfaces()[0] instanceof ParameterizedType type)) return null;
-        if (type.getActualTypeArguments().length == 0) return null;
-        return (Class<E>) type.getActualTypeArguments()[0];
+        return (Class<E>) GenericTypeUtils.getParameterTypeClass(this.getClass());
     }
 
 }

@@ -1,6 +1,6 @@
 package de.yggdrasil.core.dal.adapter;
 
-import java.lang.reflect.ParameterizedType;
+import de.yggdrasil.core.dal.utils.GenericTypeUtils;
 
 /**
  * The Adapter interface is responsible for converting data between different formats.
@@ -34,10 +34,7 @@ public interface Adapter<T> {
      * @return the class object representing the type of object that the adapter works with
      */
     default Class<T> getAdapterType() {
-        if (getClass().getGenericInterfaces().length == 0
-                || !(getClass().getGenericInterfaces()[0] instanceof ParameterizedType type)) return null;
-        if (type.getActualTypeArguments().length == 0) return null;
-        return (Class<T>) type.getActualTypeArguments()[0];
+        return (Class<T>) GenericTypeUtils.getParameterTypeClass(this.getClass());
     }
 
 }
