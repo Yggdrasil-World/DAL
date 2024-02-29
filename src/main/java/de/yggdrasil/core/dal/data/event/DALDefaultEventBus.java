@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DALDefaultEventBus implements DALEventbus{
+/**
+ * The DALDefaultEventBus class is an implementation of the DALEventBus interface.
+ * It provides methods for triggering events and registering event listeners.
+ */
+public class DALDefaultEventBus implements DALEventBus {
 
     private final HashMap<Class<? extends DataSourceDataEvent>, List<DataSourceDataListener>> eventListeners = new HashMap<>();
 
     @Override
-    public boolean triggerEvent(DataSourceDataEvent event) {
+    public boolean fireEvent(DataSourceDataEvent event) {
         for (DataSourceDataListener listener:
                 this.eventListeners.get(event.getClass())) {
                 listener.handleEvent(event);

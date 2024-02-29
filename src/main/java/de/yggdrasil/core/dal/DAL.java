@@ -9,6 +9,9 @@ import de.yggdrasil.core.dal.strings.logging.DALLogger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * The DAL (Data Access Layer) class provides methods for saving and reading data using a request system.
+ */
 public class DAL {
 
     private Logger logger = LogManager.getLogger(DAL.class);
@@ -16,6 +19,11 @@ public class DAL {
     private final static DAL instance = new DAL();
     private final DALPipelineProzessor pipelineProzessor = new DALPipelineProzessor();
 
+    /**
+     * Saves data using a write request.
+     *
+     * @param saveRequest the write request containing the data to be saved
+     */
     public void save(DALWriteRequest saveRequest) {
         try {
             logger.info(DALLogger.DAL_SAVE.formatted(saveRequest.getClass().getName()));
@@ -26,6 +34,14 @@ public class DAL {
         }
     }
 
+    /**
+     * Reads data from the data source using the specified read request.
+     *
+     * @param <T>           the type of the read request
+     * @param <V>           the type of the response
+     * @param readRequest   the read request
+     * @return the response containing the data read from the data source
+     */
     public <T extends DALReadRequest, V extends DALResponse> V read(T readRequest) {
         try {
             logger.info(DALLogger.DAL_READ.formatted(readRequest.getClass().getName()));
@@ -37,6 +53,11 @@ public class DAL {
         }
     }
 
+    /**
+     * Retrieves the instance of the DAL (Data Access Layer) class.
+     *
+     * @return the instance of the DAL class
+     */
     public static DAL get(){
         return instance;
     }
