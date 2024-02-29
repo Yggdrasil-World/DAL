@@ -25,7 +25,6 @@ public class AdapterLibrary {
 
     /**
      * Sets up the AdapterLibrary by adding a collection of adapters.
-     * Calls the addAdapterCollection method with a new instance of ClassCollector.
      */
     private void setup(){
         this.addAdapterCollection(new ClassCollector());
