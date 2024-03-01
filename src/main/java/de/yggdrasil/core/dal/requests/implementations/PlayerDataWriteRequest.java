@@ -19,7 +19,7 @@ public class PlayerDataWriteRequest implements DALWriteRequest<PlayerDataDataSou
     // the return value of this method is not used in the pipeline
     @Override
     public String getKey() {
-        return null;
+        return playerData.getPlayerID().toString();
     }
 
     @Override

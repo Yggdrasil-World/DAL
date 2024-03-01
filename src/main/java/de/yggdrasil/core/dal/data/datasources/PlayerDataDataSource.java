@@ -8,9 +8,9 @@ import java.util.UUID;
 
 /**
  * The {@code PlayerDataDataSource} class implements the {@code DataSource} interface with a type parameter of {@code PlayerData}.
-        * It provides methods to retrieve and write player related data from or to the {@code PlayerDataRepository}.
-        *
-        * @param <PlayerData> the type of data stored in the data source
+ * It provides methods to retrieve and write player related data from or to the {@code PlayerDataRepository}.
+ *
+ * @param <PlayerData> the type of data stored in the data source
  */
 public class PlayerDataDataSource implements DataSource<PlayerData> {
 
