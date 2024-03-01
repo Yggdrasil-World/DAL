@@ -6,7 +6,6 @@ import de.yggdrasil.core.dal.requests.DALReadRequest;
 import de.yggdrasil.core.dal.requests.DALWriteRequest;
 import de.yggdrasil.core.dal.responses.DALResponse;
 import de.yggdrasil.core.dal.strings.logging.DALLogger;
-import de.yggdrasil.core.dal.utils.ByteArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
