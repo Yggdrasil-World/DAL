@@ -10,7 +10,7 @@ import net.bytemc.evelon.repository.filters.MatchFilter;
  */
 public class ConfigRepository {
 
-    Repository<ConfigEntry> configEntryRepository = Repository.create(ConfigEntry.class);
+    private final Repository<ConfigEntry> configEntryRepository = Repository.create(ConfigEntry.class);
 
     /**
      * Retrieves the value associated with the given key from the config repository.

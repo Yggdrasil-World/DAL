@@ -5,7 +5,7 @@ import de.yggdrasil.core.dal.data.datasources.repositorys.ConfigRepository;
 
 /**
  * The {@code ConfigDataSource} class implements the {@code DataSource} interface with a type parameter of {@code String}.
- * It provides methods to retrieve and write configuration data from a {@code ConfigRepository}.
+ * It provides methods to retrieve and write configuration data from or to the {@code ConfigRepository}.
  *
  * @param <String> the type of data stored in the data source
  */
