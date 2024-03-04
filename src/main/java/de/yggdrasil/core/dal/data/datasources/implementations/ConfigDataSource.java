@@ -13,8 +13,8 @@ import de.yggdrasil.core.dal.data.datasources.repositorys.ConfigRepository;
  */
 public class ConfigDataSource implements DataSource<ConfigJSON> {
 
-
     private final ConfigRepository configRepository = new ConfigRepository();
+    private final static Gson GSON = new Gson();
 
     /**
      * Retrieves the data associated with the given identifier from the ConfigRepository.
@@ -24,7 +24,7 @@ public class ConfigDataSource implements DataSource<ConfigJSON> {
      */
     @Override
     public ConfigJSON getData(String identifier) {
-        return new Gson().fromJson(configRepository.getValue(identifier), ConfigJSON.class);
+        return GSON.fromJson(configRepository.getValue(identifier), ConfigJSON.class);
     }
 
     /**
