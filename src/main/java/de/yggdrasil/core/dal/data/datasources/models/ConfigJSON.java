@@ -11,7 +11,24 @@ import java.util.HashMap;
  */
 public class ConfigJSON {
 
-    private final HashMap<String, Object> values = new HashMap<>();
+    private final HashMap<String, Object> values;
+    private final static Gson GSON = new Gson();
+
+    /**
+     * Creates a new ConfigJSON object without any data inside.
+     */
+    public ConfigJSON() {
+        this.values = new HashMap<>();
+    }
+
+    /**
+     * Constructs a new ConfigJSON object from the specified data.
+     *
+     * @param values the map with existing config value data
+     */
+    public ConfigJSON(HashMap<String, Object> values) {
+        this.values = values;
+    }
 
     /**
      * Adds a value to the ConfigJSON object using the specified key.
@@ -82,8 +99,7 @@ public class ConfigJSON {
      * @return the JSON string representation of the object
      */
     public String toJSON(){
-        Gson gson = new Gson();
-        return gson.toJson(this);
+        return GSON.toJson(this.values);
     }
 
 }

@@ -5,6 +5,8 @@ import de.yggdrasil.core.dal.data.DataSource;
 import de.yggdrasil.core.dal.data.datasources.models.ConfigJSON;
 import de.yggdrasil.core.dal.data.datasources.repositorys.ConfigRepository;
 
+import java.util.HashMap;
+
 /**
  * The {@code ConfigDataSource} class implements the {@code DataSource} interface with a type parameter of {@code String}.
  * It provides methods to retrieve and write configuration data from or to the {@code ConfigRepository}.
@@ -24,7 +26,7 @@ public class ConfigDataSource implements DataSource<ConfigJSON> {
      */
     @Override
     public ConfigJSON getData(String identifier) {
-        return GSON.fromJson(configRepository.getValue(identifier), ConfigJSON.class);
+        return new ConfigJSON(GSON.fromJson(configRepository.getValue(identifier), HashMap.class));
     }
 
     /**
