@@ -1,6 +1,6 @@
 package de.yggdrasil.core.dal.requests.implementations;
 
-import de.yggdrasil.core.dal.data.datasources.PlayerDataDataSource;
+import de.yggdrasil.core.dal.data.datasources.implementations.PlayerDataDataSource;
 import de.yggdrasil.core.dal.requests.DALReadRequest;
 
 import java.util.UUID;

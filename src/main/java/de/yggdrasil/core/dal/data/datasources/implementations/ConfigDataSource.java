@@ -1,7 +1,11 @@
-package de.yggdrasil.core.dal.data.datasources;
+package de.yggdrasil.core.dal.data.datasources.implementations;
 
+import com.google.gson.Gson;
 import de.yggdrasil.core.dal.data.DataSource;
+import de.yggdrasil.core.dal.data.datasources.models.ConfigJSON;
 import de.yggdrasil.core.dal.data.datasources.repositorys.ConfigRepository;
+
+import java.util.HashMap;
 
 /**
  * The {@code ConfigDataSource} class implements the {@code DataSource} interface with a type parameter of {@code String}.
@@ -9,10 +13,10 @@ import de.yggdrasil.core.dal.data.datasources.repositorys.ConfigRepository;
  *
  * @param <String> the type of data stored in the data source
  */
-public class ConfigDataSource implements DataSource<String> {
-
+public class ConfigDataSource implements DataSource<ConfigJSON> {
 
     private final ConfigRepository configRepository = new ConfigRepository();
+    private final static Gson GSON = new Gson();
 
     /**
      * Retrieves the data associated with the given identifier from the ConfigRepository.
@@ -21,8 +25,8 @@ public class ConfigDataSource implements DataSource<String> {
      * @return the data associated with the identifier
      */
     @Override
-    public String getData(String identifier) {
-        return configRepository.getValue(identifier);
+    public ConfigJSON getData(String identifier) {
+        return new ConfigJSON(GSON.fromJson(configRepository.getValue(identifier), HashMap.class));
     }
 
     /**
@@ -32,8 +36,8 @@ public class ConfigDataSource implements DataSource<String> {
      * @param value the value to be written
      */
     @Override
-    public void writeData(String key, String value) {
-        configRepository.saveValue(key, value);
+    public void writeData(String key, ConfigJSON value) {
+        configRepository.saveValue(key, value.toJSON());
     }
 
 

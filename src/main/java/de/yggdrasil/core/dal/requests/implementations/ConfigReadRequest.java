@@ -1,6 +1,6 @@
 package de.yggdrasil.core.dal.requests.implementations;
 
-import de.yggdrasil.core.dal.data.datasources.ConfigDataSource;
+import de.yggdrasil.core.dal.data.datasources.implementations.ConfigDataSource;
 import de.yggdrasil.core.dal.requests.DALReadRequest;
 
 /**

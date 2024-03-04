@@ -1,4 +1,4 @@
-package de.yggdrasil.core.dal.data.datasources;
+package de.yggdrasil.core.dal.data.datasources.implementations;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
