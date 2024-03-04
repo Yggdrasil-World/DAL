@@ -1,6 +1,7 @@
 package de.yggdrasil.core.dal.requests.implementations;
 
-import de.yggdrasil.core.dal.data.datasources.ConfigDataSource;
+import de.yggdrasil.core.dal.data.datasources.implementations.ConfigDataSource;
+import de.yggdrasil.core.dal.data.datasources.models.ConfigJSON;
 import de.yggdrasil.core.dal.requests.DALWriteRequest;
 
 /**
@@ -9,12 +10,12 @@ import de.yggdrasil.core.dal.requests.DALWriteRequest;
  * @param key The key for the configuration data being written.
  * @param value The value of the configuration data being written.
  */
-public class ConfigWriteRequest implements DALWriteRequest<ConfigDataSource,String> {
+public class ConfigWriteRequest implements DALWriteRequest<ConfigDataSource, ConfigJSON> {
 
     private final String key;
-    private final String value;
+    private final ConfigJSON value;
 
-    public ConfigWriteRequest(String key, String value) {
+    public ConfigWriteRequest(String key, ConfigJSON value) {
         this.key = key;
         this.value = value;
     }
@@ -25,7 +26,7 @@ public class ConfigWriteRequest implements DALWriteRequest<ConfigDataSource,Stri
     }
 
     @Override
-    public String getData() {
+    public ConfigJSON getData() {
         return this.value;
     }
 }

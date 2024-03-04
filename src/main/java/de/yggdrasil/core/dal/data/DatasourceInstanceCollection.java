@@ -2,7 +2,8 @@ package de.yggdrasil.core.dal.data;
 import de.yggdrasil.core.dal.strings.logging.DatasourceLibraryLoggerMessages;
 import de.yggdrasil.core.dal.utils.ClassCollector;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 
@@ -12,7 +13,7 @@ import java.util.HashMap;
  */
 public class DatasourceInstanceCollection {
 
-    private Logger logger = LogManager.getLogger(DatasourceInstanceCollection.class);
+    private Logger logger = LoggerFactory.getLogger(DatasourceInstanceCollection.class);
 
     private final HashMap<Class<? extends DataSource>, DataSource> dataSources = new HashMap<>();
     private final static DatasourceInstanceCollection instance = new DatasourceInstanceCollection();

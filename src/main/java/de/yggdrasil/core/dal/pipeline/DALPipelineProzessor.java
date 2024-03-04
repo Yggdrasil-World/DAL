@@ -9,7 +9,8 @@ import de.yggdrasil.core.dal.strings.logging.DALPipelineProzessorLoggerMessages;
 import de.yggdrasil.core.dal.utils.ClassCollector;
 import de.yggdrasil.core.dal.utils.ReflectionUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ import java.util.HashMap;
 public class DALPipelineProzessor {
 
     private final AdapterInstanceCollection library = new AdapterInstanceCollection();
-    private Logger logger = LogManager.getLogger(DALPipelineProzessor.class);
+    private Logger logger = LoggerFactory.getLogger(DALPipelineProzessor.class);
     private HashMap<Class<? extends DALWriteRequest>, Class<? extends WritePipeline>> writePipelineMap = new HashMap<>();
     private HashMap<Class<? extends DALReadRequest>, Class<? extends ReadPipeline<?, ?>>> readPipelineMap = new HashMap<>();
 
@@ -85,7 +86,6 @@ public class DALPipelineProzessor {
             count++;
         }
         logger.info(DALPipelineProzessorLoggerMessages.ADD_PIPELINE_COLLECTION.formatted(count, readPipelineMap.size()));
-        logger.info(DALPipelineProzessorLoggerMessages.ADD_PIPELINE_COLLECTION.formatted(count, writePipelineMap.size()));
     }
 
     /**

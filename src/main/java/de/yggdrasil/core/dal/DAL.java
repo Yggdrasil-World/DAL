@@ -6,15 +6,15 @@ import de.yggdrasil.core.dal.requests.DALReadRequest;
 import de.yggdrasil.core.dal.requests.DALWriteRequest;
 import de.yggdrasil.core.dal.responses.DALResponse;
 import de.yggdrasil.core.dal.strings.logging.DALLogger;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The DAL (Data Access Layer) class provides methods for saving and reading data using a request system.
  */
 public class DAL {
 
-    private Logger logger = LogManager.getLogger(DAL.class);
+    private Logger logger = LoggerFactory.getLogger(DAL.class);
 
     private final static DAL instance = new DAL();
     private final DALPipelineProzessor pipelineProzessor = new DALPipelineProzessor();

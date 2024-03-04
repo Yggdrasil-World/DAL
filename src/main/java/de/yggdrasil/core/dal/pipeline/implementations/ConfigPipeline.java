@@ -7,7 +7,7 @@ import de.yggdrasil.core.dal.requests.implementations.ConfigReadRequest;
 import de.yggdrasil.core.dal.requests.implementations.ConfigWriteRequest;
 import de.yggdrasil.core.dal.responses.implementations.ConfigResponse;
 
-public class DefaultConfigPipeline implements
+public class ConfigPipeline implements
         ReadPipeline<ConfigReadRequest, ConfigResponse>, WritePipeline<ConfigWriteRequest> {
 
     /**
