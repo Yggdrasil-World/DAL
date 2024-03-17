@@ -6,7 +6,7 @@ import de.yggdrasil.core.dal.requests.DALReadRequest;
 import de.yggdrasil.core.dal.requests.DALWriteRequest;
 import de.yggdrasil.core.dal.responses.DALResponse;
 import de.yggdrasil.core.dal.strings.logging.DALLogger;
-import de.yggdrasil.core.dal.strings.logging.DatabaseConnectionLogger;
+import de.yggdrasil.core.dal.strings.logging.DatabaseConnectionLoggerMessages;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.bytemc.evelon.DatabaseProtocol;
 import net.bytemc.evelon.Evelon;
@@ -80,7 +80,7 @@ public class DAL {
                 databaseName, //database
                 Integer.parseInt(port) //port
         );
-        logger.info(DatabaseConnectionLogger.DATABASE_CONNECTION_DATA.formatted(host, port, databaseName, username));
+        logger.info(DatabaseConnectionLoggerMessages.DATABASE_CONNECTION_DATA.formatted(host, port, databaseName, username));
     }
 
     /**
