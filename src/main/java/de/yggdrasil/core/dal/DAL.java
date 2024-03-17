@@ -6,6 +6,10 @@ import de.yggdrasil.core.dal.requests.DALReadRequest;
 import de.yggdrasil.core.dal.requests.DALWriteRequest;
 import de.yggdrasil.core.dal.responses.DALResponse;
 import de.yggdrasil.core.dal.strings.logging.DALLogger;
+import de.yggdrasil.core.dal.strings.logging.DatabaseConnectionLoggerMessages;
+import io.github.cdimascio.dotenv.Dotenv;
+import net.bytemc.evelon.DatabaseProtocol;
+import net.bytemc.evelon.Evelon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +22,10 @@ public class DAL {
 
     private final static DAL instance = new DAL();
     private final DALPipelineProzessor pipelineProzessor = new DALPipelineProzessor();
+
+    {
+        setupEvelonDBCredentials();
+    }
 
     /**
      * Saves data using a write request.
@@ -51,6 +59,28 @@ public class DAL {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Sets up the credentials for accessing the database used by the Evelon ORM module.
+     * This method reads the necessary information from the environment variables and configures the Evelon library with the provided credentials.
+     */
+    private void setupEvelonDBCredentials() {
+        Dotenv dotenv = Dotenv.configure().load();
+        final String host = dotenv.get("ORM_HOST");
+        final String port = dotenv.get("ORM_PORT");
+        final String databaseName = dotenv.get("ORM_DB");
+        final String username = dotenv.get("ORM_USER");
+        final String password = dotenv.get("ORM_PW");
+        Evelon.setCradinates(
+                DatabaseProtocol.POSTGRESQL, //type of database
+                host, //hostname
+                password, //password
+                username, //username
+                databaseName, //database
+                Integer.parseInt(port) //port
+        );
+        logger.info(DatabaseConnectionLoggerMessages.DATABASE_CONNECTION_DATA.formatted(host, port, databaseName, username));
     }
 
     /**
